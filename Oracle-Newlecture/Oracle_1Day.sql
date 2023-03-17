@@ -3,14 +3,14 @@ CREATE TABLE MEMBER
     ID          VARCHAR2(50),
     PWD         NVARCHAR2(50),
     NAME        NVARCHAR2(50),
-    GENDER      NCHAR(2),--³²¼º,¿©¼º
+    GENDER      NCHAR(2),--Â³Â²Â¼Âº,Â¿Â©Â¼Âº
     AGE         NUMBER(3),
     BIRTHDAY    CHAR(10),--2023-01-02
     PHONE       CHAR(13),--010-1234-2345
     REGDATE     DATE
 );
 
-INSERT INTO MEMBER(GENDER) VALUES('³²¼º');
+INSERT INTO MEMBER(GENDER) VALUES('Â³Â²Â¼Âº');
 
 SELECT LENGTHB(GENDER) FROM MEMBER;
 
