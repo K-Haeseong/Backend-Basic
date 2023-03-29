@@ -97,7 +97,7 @@ public class Calculator extends HttpServlet {
 		out.write("<html>");
 		out.write("<head>");
 		out.write("<meta charset=\"UTF-8\">");
-		out.write("<title>계산기 버전2</title>");
+		out.write("<title>계산기 완성</title>");
 		out.write("<style>");
 		out.write("input{");
 		out.write("width : 50px;");
