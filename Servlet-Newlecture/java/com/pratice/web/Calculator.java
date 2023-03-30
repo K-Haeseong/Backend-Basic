@@ -22,13 +22,13 @@ public class Calculator extends HttpServlet {
 						, HttpServletResponse response) 
 						throws ServletException, IOException {
 		
-		if(request.getMethod().equals("GET")) { // 대문자로 비교하는 것 주의
-			System.out.println("GET 요청이 왔습니다.");
-		} 
-		else if(request.getMethod().equals("POST")) { // 대문자로 비교하는 것 주의
-			System.out.println("POST 요청이 왔습니다.");
-		}
-		
+//		if(request.getMethod().equals("GET")) { // 대문자로 비교하는 것 주의
+//			System.out.println("GET 요청이 왔습니다.");
+//		} 
+//		else if(request.getMethod().equals("POST")) { // 대문자로 비교하는 것 주의
+//			System.out.println("POST 요청이 왔습니다.");
+//		}
+//		
 		super.service(request, response);
 	}
 	
@@ -52,7 +52,7 @@ public class Calculator extends HttpServlet {
 		if(operator != null && operator.equals("=")) {
 			ScriptEngine engine = new ScriptEngineManager().getEngineByName("graal.js");
 			
-			System.out.println("engine name: " + engine.getFactory().getEngineName());			try {
+			try {
 				exp = String.valueOf(engine.eval(exp));
 			} catch (ScriptException e) {
 				// TODO Auto-generated catch block
