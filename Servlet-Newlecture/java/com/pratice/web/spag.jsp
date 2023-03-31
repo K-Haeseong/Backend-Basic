@@ -19,7 +19,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JSP MVC model1</title>
+<title>JSP MVC model 1</title>
 </head>
 <body>
 	<%= result %>입니다.
