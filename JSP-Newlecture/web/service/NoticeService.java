@@ -63,9 +63,9 @@ public class NoticeService {
 	
 	public Notice getPrevNotice(int id) {
 		
-		String sql = "select id from (select * from notice order by regdate desc)\r\n"
-				+ "where regdate < (select regdate from notice where id = 3)\r\n"
-				+ "and rownum = 1 ";
+		String sql = " select id from (select * from notice order by regdate desc) "
+				+ " where regdate < (select regdate from notice where id = 3) "
+				+ " and rownum = 1 ";
 		
 		return null;
 		
