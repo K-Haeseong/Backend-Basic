@@ -94,42 +94,216 @@ public class NoticeService {
 
 
 	public int getNoticeCount(String field, String query) { // 무슨 기능?
-		String sql = "select * from "
+		
+		int count = 0;
+		
+		String sql = "select count(id) COUNT from "
 				+ " (select rownum num, N.* "
-				+ " from (select * from notice order by regdate desc) N) "
-				+ " where num between 6 and 10";
+				+ " from (select * from notice where "+field+" like ? order by regdate desc) N) ";
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
 
-		return 0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, "%"+query+"%");
+			
+			
+			ResultSet rs = st.executeQuery();
+
+			count = rs.getInt("count");
+			
+				rs.close();
+				st.close();
+				con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return count;
 	}
 	
 //-------------------------- 자세한 공지사항 -----------------------------------------	
 	
 	public Notice getNotice(int id) { // 자세한 공지사항
-		String sql = "select * from notice where id=?";
 		
-		return null;
+		Notice notice = null;
+		
+		String sql = "select * from notice where id= ?";
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			st.setInt(1, id);
+			
+			
+			ResultSet rs = st.executeQuery();
+
+
+			if(rs.next()){
+				
+				int nid = rs.getInt("ID");
+				String title = rs.getString("TITLE");
+				String writer_id = rs.getString("WRITER_ID");
+				Date regdate = rs.getDate("REGDATE");
+				String hit = rs.getString("HIT");
+				String files = rs.getString("FILES");
+				String content = rs.getString("CONTENT");
+				
+				notice = new Notice(
+						nid,
+						title,
+						writer_id,
+						regdate,
+						hit,
+						files,
+						content
+					);
+			}
+
+				rs.close();
+				st.close();
+				con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return notice;
 		
 	}
 	
 	public Notice getNextNotice(int id) { // 자세한 공지사항 : 다음 공지사항
+		Notice notice = null;
+		
 		String sql = "select * from notice "
 				+ "	where id = ( "
 				+ "	select id from notice "
-				+ "	where regdate > (select regdate from notice where id = 3); "
+				+ "	where regdate > (select regdate from notice where id = ?); "
 				+ "	and rownum = 1; "
 				+ "	) ";
 		
-		return null;
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			st.setInt(1, id);
+			
+			
+			ResultSet rs = st.executeQuery();
+
+
+			if(rs.next()){
+				
+				int nid = rs.getInt("ID");
+				String title = rs.getString("TITLE");
+				String writer_id = rs.getString("WRITER_ID");
+				Date regdate = rs.getDate("REGDATE");
+				String hit = rs.getString("HIT");
+				String files = rs.getString("FILES");
+				String content = rs.getString("CONTENT");
+				
+				notice = new Notice(
+						nid,
+						title,
+						writer_id,
+						regdate,
+						hit,
+						files,
+						content
+					);
+			}
+
+				rs.close();
+				st.close();
+				con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return notice;
 		
 	}
 	
 	public Notice getPrevNotice(int id) { // 자세한 공지사항 : 이전 공지사항
+		Notice notice = null;
 		
 		String sql = "select id from (select * from notice order by regdate desc) "
-				+ " where regdate < (select regdate from notice where id = 3) "
+				+ " where regdate < (select regdate from notice where id = ?) "
 				+ " and rownum = 1";
 		
-		return null;
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			st.setInt(1, id);
+			
+			
+			ResultSet rs = st.executeQuery();
+
+
+			if(rs.next()){
+				
+				int nid = rs.getInt("ID");
+				String title = rs.getString("TITLE");
+				String writer_id = rs.getString("WRITER_ID");
+				Date regdate = rs.getDate("REGDATE");
+				String hit = rs.getString("HIT");
+				String files = rs.getString("FILES");
+				String content = rs.getString("CONTENT");
+				
+				notice = new Notice(
+						nid,
+						title,
+						writer_id,
+						regdate,
+						hit,
+						files,
+						content
+					);
+			}
+
+				rs.close();
+				st.close();
+				con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return notice;
 		
 	}
 	
