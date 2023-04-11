@@ -12,25 +12,26 @@ import java.util.List;
 import java.util.Set;
 
 import com.newlecture.web.entity.Notice;
+import com.newlecture.web.entity.NoticeView;
 
 public class NoticeService {
-	public List<Notice>getNoticeList() { // 1 페이지 공지사항 목록 가져오기
+	public List<NoticeView>getNoticeList() { // 1 페이지 공지사항 목록 가져오기
 		
 		return getNoticeList("title", "", 1);
 	}
 	
-	public List<Notice>getNoticeList(int page) { // 입력한 페이지 공지사항 목록 가져오기
+	public List<NoticeView>getNoticeList(int page) { // 입력한 페이지 공지사항 목록 가져오기
 
 		return getNoticeList("title", "", page);
 	}
 
-	public List<Notice>getNoticeList(String field/*title, wirter_id*/, String query/*검색어*/, int page) { // 검색 요청
+	public List<NoticeView>getNoticeList(String field/*title, wirter_id*/, String query/*검색어*/, int page) { // 검색 요청
 		
-		List<Notice> list = new ArrayList<>();
+		List<NoticeView> list = new ArrayList<>();
 		
 		String sql = "select * from "
 				+ " (select rownum num, N.* "
-				+ " from (select * from notice where "+field+" like ? order by regdate desc) N) "
+				+ " from (select * from notice_view3 where "+field+" like ? order by regdate desc) N) "
 				+ " where num between ? and ?";
 		
 		// 첫번째 페이지 = 1 + (page - 10) * 10
@@ -58,16 +59,17 @@ public class NoticeService {
 				Date regdate = rs.getDate("REGDATE");
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
-				String content = rs.getString("CONTENT");
-				
-				Notice notice = new Notice(
+				//String content = rs.getString("CONTENT");
+				int cmtCount = rs.getInt("cmt_count");
+				NoticeView notice = new NoticeView(
 						id,
 						title,
 						writer_id,
 						regdate,
 						hit,
 						files,
-						content
+						//content,
+						cmtCount
 					);
 				list.add(notice);
 			}
