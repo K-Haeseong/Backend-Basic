@@ -1,6 +1,7 @@
 package com.newlecture.web.controller.admin.notice;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,9 +25,18 @@ public class RegController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doPost(request, response);
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String isOpen = request.getParameter("open");
+		
+		PrintWriter out = response.getWriter();
+		out.printf("title : %s<br>", title);
+		out.printf("content : %s<br>", content);
+		out.printf("open : %s<br>", isOpen);
+		
 	}
 		
 		
 		
 	}
+
