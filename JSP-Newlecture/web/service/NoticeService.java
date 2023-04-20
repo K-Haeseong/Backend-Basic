@@ -101,6 +101,10 @@ public class NoticeService {
 				String files = rs.getString("FILES");
 				//String content = rs.getString("CONTENT");
 				int cmtCount = rs.getInt("cmt_count");
+				boolean pub = rs.getBoolean("PUB");
+				
+				
+				
 				NoticeView notice = new NoticeView(
 						id,
 						title,
@@ -108,8 +112,10 @@ public class NoticeService {
 						regdate,
 						hit,
 						files,
+						pub,
 						//content,
 						cmtCount
+						
 					);
 				list.add(notice);
 			}
@@ -202,6 +208,7 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
+				boolean pub = rs.getBoolean("PUB");
 				
 				notice = new Notice(
 						nid,
@@ -210,7 +217,8 @@ public class NoticeService {
 						regdate,
 						hit,
 						files,
-						content
+						content,
+						pub
 					);
 			}
 
@@ -262,6 +270,7 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
+				boolean pub = rs.getBoolean("PUB");
 				
 				notice = new Notice(
 						nid,
@@ -270,7 +279,8 @@ public class NoticeService {
 						regdate,
 						hit,
 						files,
-						content
+						content,
+						pub
 					);
 			}
 
@@ -320,6 +330,7 @@ public class NoticeService {
 				String hit = rs.getString("HIT");
 				String files = rs.getString("FILES");
 				String content = rs.getString("CONTENT");
+				boolean pub = rs.getBoolean("PUB");
 				
 				notice = new Notice(
 						nid,
@@ -328,7 +339,8 @@ public class NoticeService {
 						regdate,
 						hit,
 						files,
-						content
+						content,
+						pub
 					);
 			}
 
@@ -348,6 +360,48 @@ public class NoticeService {
 		return notice;
 		
 	}
+
+
+	public int deleteNoticeAll(int[] ids) {
+		
+		int result = 0;
+		
+		String params = "";
+		
+		for (int i = 0; i < ids.length; i++) {
+			params +=ids[i];
+			
+			if(i < ids.length-1)
+				params += ",";
+		}
+		
+		String sql = "delete notice where id in ("+params+")";
+		
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			Statement st = con.createStatement();
+			
+			
+			result = st.executeUpdate(sql);
+
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return 0;
+	}
 	
 }
-
