@@ -30,23 +30,22 @@ public class RegController extends HttpServlet {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		String isOpen = request.getParameter("open");
-		
+		boolean pub = false;
+		if(isOpen != null)
+			pub = true;
 		
 		Notice notice = new Notice();
 		notice.setTitle(title);
 		notice.setContent(content);
-//		notice.set
+		notice.setPub(pub);
+		notice.setWriter_id("newlec");
+		
 		
 		NoticeService service = new NoticeService();
 		service.insertNotice(notice);
 		
 		
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.printf("title : %s<br>", title);
-		out.printf("content : %s<br>", content);
-		out.printf("open : %s<br>", isOpen);
+		
 		
 	}
 		
