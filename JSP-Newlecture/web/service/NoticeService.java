@@ -30,7 +30,39 @@ public class NoticeService {
 	
 	public int insertNotice(Notice notice){
 		
-		return 0;
+		int result = 0;
+		
+		
+		String sql = "insert into notice(title, content, writer_id, pub) "
+				+ "	values(?,?,?,?)";
+		
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, notice.getTitle());
+			st.setString(2, notice.getContent());
+			st.setString(3, notice.getWriter_id());
+			st.setBoolean(4, notice.getPub());
+			
+			result = st.executeUpdate();
+
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
 	}
 	
 	
@@ -400,8 +432,7 @@ public class NoticeService {
 		}
 		
 		
-		
-		return 0;
+		return result;
 	}
 	
 }
