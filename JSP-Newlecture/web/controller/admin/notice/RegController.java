@@ -42,7 +42,9 @@ public class RegController extends HttpServlet {
 		
 		
 		NoticeService service = new NoticeService();
-		service.insertNotice(notice);
+		int result = service.insertNotice(notice);
+		
+		response.sendRedirect("list");
 		
 		
 		
