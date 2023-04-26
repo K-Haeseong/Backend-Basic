@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,10 +23,64 @@ public class NoticeService {
 	}
 	
 	
-	public int pubNoticeAll(int[] ids){
+	public int pubNoticeAll(int[] oids, int[] cids){
 		
-		return 0;
+		List<String> oidsList = new ArrayList<>();
+		for(int i=0; i<oids.length; i++)
+			oidsList.add(String.valueOf(oids[i]));
+		
+		List<String> cidsList = new ArrayList<>();
+		for(int i=0; i<cids.length; i++)
+			oidsList.add(String.valueOf(cids[i]));
+		
+		
+		return pubNoticeAll(oidsList, cidsList);
 	}
+	
+	public int pubNoticeAll(List<String> oids, List<String> cids){
+		
+		String oidsCSV = String.join(",", oids);
+		String cidsCSV = String.join(",", cids);
+		
+		return pubNoticeAll(oidsCSV, cidsCSV);
+	}
+	
+	public int pubNoticeAll(String oidsCSV, String cidsCSV){
+		
+		int result = 0;
+		
+		String sqlOpen = String.format("update notice set pub=1 where id in (%s)", oidsCSV);
+		String sqlClose = String.format("update notice set pub=0 where id in (%s)", cidsCSV);
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			Statement stOpen = con.createStatement();
+			result += stOpen.executeUpdate(sqlOpen);
+			
+			Statement stClose = con.createStatement();
+			result += stClose.executeUpdate(sqlClose);
+			
+			stOpen.close();
+			stClose.close();
+			con.close();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	
+	
 	
 	
 	public int insertNotice(Notice notice){
@@ -167,14 +222,83 @@ public class NoticeService {
 		return list;
 
 	}
+	
+	public List<NoticeView> getNoticePubList(String field, String query, int page) {
+		
+		List<NoticeView> list = new ArrayList<>();
+		
+		String sql = "select * from "
+				+ " (select rownum num, N.* "
+				+ " from (select * from notice_view3 where "+field+" like ? order by regdate desc) N) "
+				+ " where pub = 1 and num between ? and ?";
+		
+		
+		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url,"newlec", "101800");
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, "%"+query+"%");
+			st.setInt(2, 1 + (page - 1) * 10);
+			st.setInt(3, page * 10);
+			
+			ResultSet rs = st.executeQuery();
+
+
+			while(rs.next()){
+				
+				int id = rs.getInt("ID");
+				String title = rs.getString("TITLE");
+				String writer_id = rs.getString("WRITER_ID");
+				Date regdate = rs.getDate("REGDATE");
+				String hit = rs.getString("HIT");
+				String files = rs.getString("FILES");
+				//String content = rs.getString("CONTENT");
+				int cmtCount = rs.getInt("cmt_count");
+				boolean pub = rs.getBoolean("PUB");
+				
+				
+				
+				NoticeView notice = new NoticeView(
+						id,
+						title,
+						writer_id,
+						regdate,
+						hit,
+						files,
+						pub,
+						//content,
+						cmtCount
+						
+					);
+				list.add(notice);
+			}
+
+				rs.close();
+				st.close();
+				con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+		
+	}
+	
 //	-------------------------------------------
-	public int getNoticeCount() { // 무슨 기능?
+	public int getNoticeCount() { 
 
 		return getNoticeCount("title", "");
 	}
 
 
-	public int getNoticeCount(String field, String query) { // 무슨 기능?
+	public int getNoticeCount(String field, String query) {
 		
 		int count = 0;
 		
@@ -435,5 +559,6 @@ public class NoticeService {
 		
 		return result;
 	}
+
 	
 }
