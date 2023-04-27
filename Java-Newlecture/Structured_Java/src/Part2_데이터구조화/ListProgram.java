@@ -41,13 +41,18 @@ public class ListProgram {
 			
 }
 	private static void printList(ExamList list) {
+		printList(list, list.current);
+		
+	}
+	
+	private static void printList(ExamList list, int size) {
 		
 		System.out.println("┌──────────────────┐");
 		System.out.println("│     성적 출력      │");
 		System.out.println("└──────────────────┘");
 		System.out.println();
 		
-		int size = list.current;
+		//int size = list.current;
 		Exam[] exams = list.exams;
 		
 		for (int i = 0; i < size; i++) {
@@ -118,6 +123,16 @@ public class ListProgram {
 			exam.kor = kor;
 			exam.eng = eng;
 			exam.math = math;
+			
+			Exam[] exams = list.exams;
+			int size = list.current;
+			
+			if (list.exams.length == list.current) {
+				Exam[] temp = new Exam[size + 5];
+				for (int i = 0; i < size; i++)
+					temp[i] = exams[i];
+				list.exams = temp;
+			}
 			
 			list.exams[list.current] = exam;
 			list.current++;
