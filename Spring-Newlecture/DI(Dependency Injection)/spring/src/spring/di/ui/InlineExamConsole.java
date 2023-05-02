@@ -29,5 +29,4 @@ public class InlineExamConsole implements ExamConsole {
 		this.exam =exam;
 
 	}
-
 }
