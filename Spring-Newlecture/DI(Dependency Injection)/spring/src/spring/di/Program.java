@@ -1,6 +1,7 @@
 package spring.di;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.di.ui.ExamConsole;
@@ -20,7 +21,8 @@ public class Program {
 
 		
 		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("spring/di/setting.xml");
+				new AnnotationConfigApplicationContext(NewlecDIConfig.class);
+//				new ClassPathXmlApplicationContext("spring/di/setting.xml");
 		
 		//Exam exam = context.getBean(Exam.class);
 		//System.out.println(exam.toString());
