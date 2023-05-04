@@ -1,0 +1,19 @@
+package spring.di;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+import spring.di.entity.Exam;
+import spring.di.entity.NewlecExam;
+
+@Component("spring.di.ui")
+@Configuration
+public class NewlecDIConfig {
+	
+	@Bean
+	public Exam exam() {
+		return new NewlecExam();
+	}
+	
+}
