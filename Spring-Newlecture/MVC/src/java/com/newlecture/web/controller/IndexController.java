@@ -12,14 +12,14 @@ public class IndexController implements Controller {
 		
 		System.out.println("index controller");
 		
-		// ±âÁ¸¹æ½Ä
+		// ê¸°ì¡´ë°©ì‹
 //		ModelAndView mv = new ModelAndView();
 //		mv.setViewName("index");
 //		mv.addObject("data", "Hello Spring MVC~!!");
 //		mv.setViewName("/WEB_INF/view/index.jsp");
 		
-		// º¯°æµÈ¹æ½Ä
-		ModelAndView mv = new ModelAndView("index");
+		// ë³€ê²½ëœë°©ì‹
+		ModelAndView mv = new ModelAndView("root.index");
 		mv.addObject("data", "Hello Spring MVC~!!");
 		
 		
