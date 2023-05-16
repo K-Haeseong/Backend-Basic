@@ -1,20 +1,17 @@
 package com.newlecture.web.controller.customer;
 
 import java.sql.SQLException;
-import java.util.List;
 
-import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.newlecture.web.entity.Notice;
 import com.newlecture.web.service.NoticeService;
 
 
 @Controller
-@RequestMapping("/customer/notice")
+@RequestMapping("/customer/notice/")
 public class NoticeController{
 
 	@Autowired
@@ -34,17 +31,22 @@ public class NoticeController{
 	}
 	
 	
-
+	@RequestMapping("reg")
+	public String reg() {
+		return "notice.reg";
+	}
 	
-//	  @Override public ModelAndView handleRequest(HttpServletRequest request,
-//	  HttpServletResponse response) throws Exception {
+
+		
+//	 @Override public ModelAndView handleRequest(HttpServletRequest request,
+//	 HttpServletResponse response) throws Exception {
 //	  
-//	  ModelAndView mv = new ModelAndView("notice.list");
-//	  mv.setViewName("/WEB_INF/view/notice/list.jsp"); 
-//	  List<Notice> list = noticeService.getList(1, "TITLE", ""); 
-//	  mv.addObject("list", list);
+//	 ModelAndView mv = new ModelAndView("notice.list");
+//	 mv.setViewName("/WEB_INF/view/notice/list.jsp"); 
+//	 List<Notice> list = noticeService.getList(1, "TITLE", ""); 
+//	 mv.addObject("list", list);
 //	  
-//	  return mv; }
+//	 return mv; }
 	 
 
 }
