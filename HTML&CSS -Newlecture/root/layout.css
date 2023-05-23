@@ -1,38 +1,41 @@
 @import url("css/reset.css");
 
+.s1 {
+    height: 100%;
+}
+
 .s1 ul{
     display: flex;
+    height: 300px;
+    /* flex-direction: column; */
     background-color: gray;
-    flex-flow: column wrap;
-    height: 250px;
+    /* align-items: center; */
+   align-content: center;
+   flex-wrap: wrap;
 }
 
 .s1 li{
-    flex: 1 0 100px;
-    
+    flex-basis: 100px;
+    flex-shrink: 0;
 }
+
 
  .s1 li:nth-child(1){
     background-color: red;
-    order:4;
  }
  
  .s1 li:nth-child(2){
     background-color: green;
-    order:2;
  }
 
  .s1 li:nth-child(3){
     background-color: blue;
-    order:3;
  }
 
  .s1 li:nth-child(4){
     background-color: yellow;
-    order:1;
 }
 
  .s1 li:nth-child(5){
     background-color: lightblue;
-    order:5;
 }
