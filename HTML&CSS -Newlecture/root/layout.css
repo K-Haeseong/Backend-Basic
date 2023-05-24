@@ -9,7 +9,8 @@
     height: 300px;
     /* flex-direction: column; */
     background-color: gray;
-    /* align-items: center; */
+    /* justify-content : space-evenly;/*
+    /* align-items: flex-center; */
    align-content: center;
    flex-wrap: wrap;
 }
