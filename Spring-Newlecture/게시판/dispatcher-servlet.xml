@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="/index" class="com.firstboard.web.controller.HomeController"></bean>  
+	<bean name="/board" class="com.firstboard.web.controller.board.BoardController">
+		<property name="noticeService" ref="noticeService" />
+	</bean>
+	
+	<bean name="/board/detail" class="com.firstboard.web.controller.board.DetailController">
+		<property name="noticeService" ref="noticeService" />
+	</bean>
+	
+	<bean id="noticeService" class="com.firstboard.web.service.NoticeService" ></bean>
+	
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	
+
+
+
+
+</beans>
+
+
+
